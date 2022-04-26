@@ -84,7 +84,7 @@ int create_socket(const char *apstrPort) {
 	}
 
 	int	sock;
-	int	yes;
+	int	yes = 1;
 	for (p = servinfo; p != NULL; p = p->ai_next) {
 		sock = socket(p->ai_family, p->ai_socktype, p->ai_protocol);
 		if (sock == -1) {
