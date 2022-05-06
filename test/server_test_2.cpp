@@ -59,9 +59,33 @@ int	main()
 		if (bytes_recvd < 0) {
 			std::cout << "Failed to read from connection " << conn << ", errno "
 				<< errno << ": " << strerror(errno) << std::endl;
+			close(conn);
+			continue;
 		} else {
 			std::cout << buffer;
 			std::cout << ">>> end of the message \n";
+		}
+
+		std::string response = "HTTP/1.1 200 OK\n"
+			"Date: Mon, 27 Jul 2009 12:28:53 GMT\n"
+			"Server: Apache/2.2.14 (Win32)\n"
+			"Last-Modified: Wed, 22 Jul 2009 19:15:56 GMT\n"
+			"Content-Length: 88\n"
+			"Content-Type: text/html\n"
+			"Connection: Closed\n"
+			"\n"
+			"<html>\n"
+			"<body>\n"
+			"<h1>Hello, World!</h1>\n"
+			"</body>\n"
+			"</html>\n";
+
+		ssize_t bytes_sent;
+		bytes_sent = send(conn, response.c_str(), response.size(), 0);
+		if (bytes_sent < 0) {
+			std::cout << "Failed to send to connection " << conn << ", errno "
+				<< errno << ": " << strerror(errno) << std::endl;
+			exit(EXIT_FAILURE);
 		}
 		close(conn);
 	}
