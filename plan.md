@@ -1,5 +1,3 @@
-
-
 struct Config
 {
 	server_name
@@ -18,7 +16,7 @@ struct Location {
 	auto_index
 	client_body
 	cgi_pass
-	locations
+	<!-- locations -->
 }
 
 struct Connection {
@@ -38,8 +36,8 @@ class Server
 		configParser
 		configs = configParser.parse(pathToConfig)
 	}
-	startup
-	shutdown
+	up
+	down
 }
 
 class ConfigParser {
@@ -54,3 +52,9 @@ int main() {
 
 fd - server 
 1 - *asd
+
+1. Non-blocking server via select able to serve multiple clients
+2. Connection for keeping track of partial reads
+3. Config based multiple virtual servers
+4. Find locations. If found, serve, otherwise return 404
+5. Check config rules for location
